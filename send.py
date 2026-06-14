@@ -6,6 +6,12 @@ import time
 import os
 import urllib.parse
 
+try:
+    from pyngrok import ngrok as _ngrok
+    NGROK_OK = True
+except ImportError:
+    NGROK_OK = False
+
 SENT_FILE   = "sent_numbers.txt"
 DEBUG_PORT  = 9222
 
@@ -195,6 +201,18 @@ def send_one(drv, phone_plus, msg, timeout=25):
 
 st.set_page_config(page_title="WhatsApp Bulk Sender", layout="centered")
 st.title("📤 WhatsApp Bulk Sender")
+
+# ── Lien public ngrok ─────────────────────────────────────────────────────────
+if NGROK_OK:
+    if "ngrok_url" not in st.session_state:
+        try:
+            tunnel = _ngrok.connect(8502)
+            st.session_state.ngrok_url = tunnel.public_url
+        except Exception:
+            st.session_state.ngrok_url = None
+    if st.session_state.ngrok_url:
+        st.success(f"🌐 Lien public : **{st.session_state.ngrok_url}**  \n"
+                   f"Partage ce lien pour accéder à l'app depuis n'importe où.")
 
 if not SELENIUM_OK:
     st.error("❌ Installe selenium : `pip install selenium`")
