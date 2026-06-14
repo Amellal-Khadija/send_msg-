@@ -1,0 +1,20 @@
+# Session WhatsApp — données personnelles sensibles
+whatsapp_session/
+
+# Historique d'envoi — numéros privés
+sent_numbers.txt
+
+# Fichiers pywhatkit
+PyWhatKit_DB.txt
+
+# Captures d'écran d'erreur
+*.png
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Excel uploadés
+*.xlsx
